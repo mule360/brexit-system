@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="functional.RunCucumberTests" time="1.605" tests="11" errors="2" skipped="3" failures="0">
+  <properties>
+    <property name="skipMunitTests" value="true"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="C:\sandbox\tools\java\jdk-8u65\jre\bin"/>
+    <property name="java.vm.version" value="25.65-b01"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="maven.multiModuleProjectDirectory" value="C:\clients\MULE360\brexit-system"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=";"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="GB"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="C:\clients\MULE360\brexit-system"/>
+    <property name="java.runtime.version" value="1.8.0_65-b17"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="C:\sandbox\tools\java\jdk-8u65\jre\lib\endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\ralph\AppData\Local\Temp\"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 8.1"/>
+    <property name="classworlds.conf" value="C:\sandbox\tools\apache-maven-3.3.3\bin\m2.conf"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\sandbox\tools\java\jdk-8u65\bin;C:\windows\Sun\Java\bin;C:\windows\system32;C:\windows;C:/sandbox/tools/java/jdk-8u65/bin/../jre/bin/server;C:/sandbox/tools/java/jdk-8u65/bin/../jre/bin;C:/sandbox/tools/java/jdk-8u65/bin/../jre/lib/amd64;C:\sandbox\tools\java\jdk-8u65\bin;C:\sandbox\tools\apache-maven-3.3.3\bin;C:\sandbox\tools\AnypointStudio\AnypointStudio;C:\sandbox\tools\Python27;C:\sandbox\tools\java\jdk-8u65\bin;C:\sandbox\tools\apache-maven-3.3.3\bin;C:\sandbox\tools\AnypointStudio\AnypointStudio;C:\sandbox\tools\Python27;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Lenovo\FusionEngine;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files (x86)\Common Files\lenovo\easyplussdk\bin;C:\Program Files (x86)\Lenovo\Motion Control\;C:\Program Files\cURL\bin;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\ManagementStudio\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\DTS\Binn\;C:\sandbox\tools\atlassian\;C:\sandbox\tools\git\Git\cmd;c:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\;c:\Program Files\Microsoft SQL Server\110\Tools\Binn\;c:\Program Files\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files (x86)\Microsoft SDKs\TypeScript\1.0\;C:\sandbox\gitbash\cmd;C:\sandbox\gitbash\mingw64\bin;C:\sandbox\gitbash\usr\bin;C:\sandbox\tools\node4\;C:\Program Files (x86)\Skype\Phone\;C:\Ruby22-x64\bin;C:\Users\ralph\AppData\Roaming\npm;;;C:\clients\MULE360\opendata;;."/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="52.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="6.3"/>
+    <property name="user.home" value="C:\Users\ralph"/>
+    <property name="user.timezone" value="Europe/London"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="user.name" value="ralph"/>
+    <property name="java.class.path" value="C:\sandbox\tools\apache-maven-3.3.3\boot\plexus-classworlds-2.5.2.jar"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="C:\sandbox\tools\java\jdk-8u65\jre"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -B clean package -DskipMunitTests"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="en"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.8.0_65"/>
+    <property name="java.ext.dirs" value="C:\sandbox\tools\java\jdk-8u65\jre\lib\ext;C:\windows\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="C:\sandbox\tools\java\jdk-8u65\jre\lib\resources.jar;C:\sandbox\tools\java\jdk-8u65\jre\lib\rt.jar;C:\sandbox\tools\java\jdk-8u65\jre\lib\sunrsasign.jar;C:\sandbox\tools\java\jdk-8u65\jre\lib\jsse.jar;C:\sandbox\tools\java\jdk-8u65\jre\lib\jce.jar;C:\sandbox\tools\java\jdk-8u65\jre\lib\charsets.jar;C:\sandbox\tools\java\jdk-8u65\jre\lib\jfr.jar;C:\sandbox\tools\java\jdk-8u65\jre\classes"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="C:\sandbox\tools\apache-maven-3.3.3"/>
+    <property name="file.separator" value="\"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase name="Given The calculator is running" classname="Scenario: Calculator Addition" time="0.001"/>
+  <testcase name="And The first number is 123" classname="Scenario: Calculator Addition" time="0"/>
+  <testcase name="And The second number is 200" classname="Scenario: Calculator Addition" time="0"/>
+  <testcase name="When I call the add function" classname="Scenario: Calculator Addition" time="0"/>
+  <testcase name="Then The calculator returns 323" classname="Scenario: Calculator Addition" time="0"/>
+  <testcase name="Scenario: Calculator Addition" classname="Scenario: Calculator Addition" time="0"/>
+  <testcase name="Given The Http Service is running" classname="Scenario: GET /test returns value test" time="0.01">
+    <error message="Failed to instantiate class functional.HttpServiceStepDefs" type="cucumber.runtime.CucumberException">cucumber.runtime.CucumberException: Failed to instantiate class functional.HttpServiceStepDefs
+Caused by: java.lang.reflect.InvocationTargetException
+Caused by: org.mule.api.config.ConfigurationException: tshirt-app.xml (java.io.FileNotFoundException)
+Caused by: java.io.FileNotFoundException: tshirt-app.xml
+</error>
+    <system-out><![CDATA[
+  Scenario: Calculator Addition     &amp#27;[90m# calculator.feature:3&amp#27;[0m
+    &amp#27;[32mGiven &amp#27;[0m&amp#27;[32mThe calculator is running&amp#27;[0m &amp#27;[90m# RunCalculatorStepDefs.the_calculator_is_running()&amp#27;[0m
+    &amp#27;[32mAnd &amp#27;[0m&amp#27;[32mThe first number is &amp#27;[0m&amp#27;[32m&amp#27;[1m123&amp#27;[0m     &amp#27;[90m# RunCalculatorStepDefs.the_first_number_is(int)&amp#27;[0m
+    &amp#27;[32mAnd &amp#27;[0m&amp#27;[32mThe second number is &amp#27;[0m&amp#27;[32m&amp#27;[1m200&amp#27;[0m    &amp#27;[90m# RunCalculatorStepDefs.the_second_number_is(int)&amp#27;[0m
+    &amp#27;[32mWhen &amp#27;[0m&amp#27;[32mI call the add function&amp#27;[0m    &amp#27;[90m# RunCalculatorStepDefs.i_call_the_add_function()&amp#27;[0m
+    &amp#27;[32mThen &amp#27;[0m&amp#27;[32mThe calculator returns &amp#27;[0m&amp#27;[32m&amp#27;[1m323&amp#27;[0m &amp#27;[90m# RunCalculatorStepDefs.the_calculator_returns(int)&amp#27;[0m
+Feature: Http Service
+]]></system-out>
+  </testcase>
+  <testcase name="Scenario: GET /test returns value test" classname="Scenario: GET /test returns value test" time="0.012">
+    <error message="Failed to instantiate class functional.HttpServiceStepDefs" type="cucumber.runtime.CucumberException">cucumber.runtime.CucumberException: Failed to instantiate class functional.HttpServiceStepDefs
+Caused by: java.lang.reflect.InvocationTargetException
+Caused by: org.mule.api.config.ConfigurationException: tshirt-app.xml (java.io.FileNotFoundException)
+Caused by: java.io.FileNotFoundException: tshirt-app.xml
+</error>
+  </testcase>
+  <testcase name="When The service is called with a GET method" classname="Scenario: GET /test returns value test" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="Then The service returns an HTTP response of 200" classname="Scenario: GET /test returns value test" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="And The payload contains the value &quot;Test&quot;" classname="Scenario: GET /test returns value test" time="0">
+    <skipped/>
+  </testcase>
+</testsuite>

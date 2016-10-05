@@ -1,0 +1,21 @@
+<project>
+	  
+	  <skin>
+    <groupId>org.apache.maven.skins</groupId>
+    <artifactId>maven-fluido-skin</artifactId>
+    <version>1.3.0</version>
+  </skin>
+  
+      <body>
+        <menu name="Sample Project">
+            <item name="Overview" href="index.html"/>
+        </menu>
+        <menu ref="reports"/>
+        
+        <menu name="BDD Functional Tests">
+	      <item name="Feature Overview" href="cucumber-reports/feature-overview.html"/>
+	      <item name="Tag Overview" href="cucumber-reports/tag-overview.html"/>
+    	</menu>
+
+    </body>
+</project>

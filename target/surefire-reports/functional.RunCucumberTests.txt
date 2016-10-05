@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: functional.RunCucumberTests
+-------------------------------------------------------------------------------
+Tests run: 11, Failures: 0, Errors: 2, Skipped: 3, Time elapsed: 1.605 sec <<< FAILURE! - in functional.RunCucumberTests
+Given The Http Service is running(Scenario: GET /test returns value test)  Time elapsed: 0.01 sec  <<< ERROR!
+cucumber.runtime.CucumberException: Failed to instantiate class functional.HttpServiceStepDefs
+Caused by: java.lang.reflect.InvocationTargetException
+Caused by: org.mule.api.config.ConfigurationException: tshirt-app.xml (java.io.FileNotFoundException)
+Caused by: java.io.FileNotFoundException: tshirt-app.xml
+
+Scenario: GET /test returns value test  Time elapsed: 0.012 sec  <<< ERROR!
+cucumber.runtime.CucumberException: Failed to instantiate class functional.HttpServiceStepDefs
+Caused by: java.lang.reflect.InvocationTargetException
+Caused by: org.mule.api.config.ConfigurationException: tshirt-app.xml (java.io.FileNotFoundException)
+Caused by: java.io.FileNotFoundException: tshirt-app.xml
+

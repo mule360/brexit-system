@@ -1,0 +1,80 @@
+#%RAML 0.8
+title: Brexit System Layer
+version: 1.0.development
+baseUri: http://mule360.io/api/brexit/system/
+/areas:
+  displayName: Areas
+  get:
+    description: Get a list of all the areas
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [
+               {
+                  "identity": "160",
+                  "gss": "E08000004",
+                  "ons": "00BP",
+                  "unitId": "18690",
+                  "mapItId": "2531",
+                  "areaTypeCode": "MTD",
+                  "areaTypeName": "Metropolitan district",
+                  "name": "Oldham Borough Council",
+                  "country": "England",
+                  "regionName": "North West",
+                  "regionCode": "E12000002",
+                  "latitudeMiddle": "53.551876030285044",
+                  "longitudeMiddle": "-2.0506501805122013",
+                  "latitudeMinimum": "53.491104018268466",
+                  "latitudeMaximum": "53.624146569229055",
+                  "longitudeMinimum": "-2.186025456750565",
+                  "longitudeMaximum": "-1.9096256875503146",
+                  "areaSize": 142344920.5799998,
+                  "electorate": "158084",
+                  "registered": "107493",
+                  "validVotes": "107403",
+                  "leaveVotes": "65369",
+                  "remainVotes": "42034",
+                  "totalPopulation": "230823",
+                  "malePopulation": "113661",
+                  "femalePopulation": "117162"
+                }
+              ]
+  /{identity}:
+    displayName: Area
+    get:
+      description: A single Area
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                 {
+                    "identity": "160",
+                    "gss": "E08000004",
+                    "ons": "00BP",
+                    "unitId": "18690",
+                    "mapItId": "2531",
+                    "areaTypeCode": "MTD",
+                    "areaTypeName": "Metropolitan district",
+                    "name": "Oldham Borough Council",
+                    "country": "England",
+                    "regionName": "North West",
+                    "regionCode": "E12000002",
+                    "latitudeMiddle": "53.551876030285044",
+                    "longitudeMiddle": "-2.0506501805122013",
+                    "latitudeMinimum": "53.491104018268466",
+                    "latitudeMaximum": "53.624146569229055",
+                    "longitudeMinimum": "-2.186025456750565",
+                    "longitudeMaximum": "-1.9096256875503146",
+                    "areaSize": 142344920.5799998,
+                    "electorate": "158084",
+                    "registered": "107493",
+                    "validVotes": "107403",
+                    "leaveVotes": "65369",
+                    "remainVotes": "42034",
+                    "totalPopulation": "230823",
+                    "malePopulation": "113661",
+                    "femalePopulation": "117162"
+                  }
