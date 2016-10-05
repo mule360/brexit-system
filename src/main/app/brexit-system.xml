@@ -28,7 +28,7 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
     <flow name="get:/areas:brexit-system-config">
         <mongo:find-objects config-ref="Mongo_DB" collection="Area" doc:name="Mongo DB" />
         <mongo:mongo-collection-to-json doc:name="CollectionToJson" />
-        <logger level="INFO" doc:name="Logger" message="#[payload]" />
+        <logger level="INFO" doc:name="Logger" message="getAreas() returned : \n#[payload]\n" />
         <set-payload value="#[payload]" doc:name="Set Payload" />
     </flow>
     
@@ -38,7 +38,7 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
 	            <mongo:query-attribute key="identity">#[identity]</mongo:query-attribute>
 	        </mongo:query-attributes>
 	   	 </mongo:find-one-object-using-query-map>
-        <logger level="INFO" doc:name="Logger" message="#[payload]" />
+        <logger level="INFO" doc:name="Logger" message="/area/#[identity] () returned : \n#[payload]\n" />
         <set-payload value="#[payload]" doc:name="Set Payload" />
 			<choice-exception-strategy doc:name="Choice Exception Strategy">
 				<catch-exception-strategy doc:name="Catch Exception Strategy" when="#[exception.causedBy(com.mongodb.MongoException)]">

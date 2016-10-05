@@ -12,34 +12,43 @@ baseUri: http://mule360.io/api/brexit/system/
           application/json:
             example: |
               [
-               {
-                  "identity": "160",
-                  "gss": "E08000004",
-                  "ons": "00BP",
-                  "unitId": "18690",
-                  "mapItId": "2531",
-                  "areaTypeCode": "MTD",
-                  "areaTypeName": "Metropolitan district",
-                  "name": "Oldham Borough Council",
-                  "country": "England",
-                  "regionName": "North West",
-                  "regionCode": "E12000002",
-                  "latitudeMiddle": "53.551876030285044",
-                  "longitudeMiddle": "-2.0506501805122013",
-                  "latitudeMinimum": "53.491104018268466",
-                  "latitudeMaximum": "53.624146569229055",
-                  "longitudeMinimum": "-2.186025456750565",
-                  "longitudeMaximum": "-1.9096256875503146",
-                  "areaSize": 142344920.5799998,
-                  "electorate": "158084",
-                  "registered": "107493",
-                  "validVotes": "107403",
-                  "leaveVotes": "65369",
-                  "remainVotes": "42034",
-                  "totalPopulation": "230823",
-                  "malePopulation": "113661",
-                  "femalePopulation": "117162"
-                }
+                 {
+                    "_id": {
+                      "time": 1471828347000,
+                      "machine": -1950106814,
+                      "timeSecond": 1471828347,
+                      "inc": 67449346,
+                      "new": false
+                    },
+                    "_class": "io.dd.brexit.model.Area",
+                    "areaSize": 21574981.58999999,
+                    "areaTypeCode": "LBO",
+                    "areaTypeName": "London borough",
+                    "country": "England",
+                    "electorate": 167820,
+                    "femalePopulation": 141787,
+                    "gss": "E09000030",
+                    "identity": "117",
+                    "latitudeMaximum": "51.544632740648865",
+                    "latitudeMiddle": "51.515687169175585",
+                    "latitudeMinimum": "51.484448635185025",
+                    "leaveVotes": 35224,
+                    "links": [],
+                    "longitudeMaximum": "0.009886230454418358",
+                    "longitudeMiddle": "-0.03463999651847128",
+                    "longitudeMinimum": "-0.08016930267471568",
+                    "malePopulation": 153449,
+                    "mapItId": "2506",
+                    "name": "Tower Hamlets Borough Council",
+                    "ons": "00BG",
+                    "regionCode": "E12000007",
+                    "regionName": "London",
+                    "registered": 108421,
+                    "remainVotes": 73011,
+                    "totalPopulation": 295236,
+                    "unitId": "11185",
+                    "validVotes": 108235
+                  }
               ]
   /{identity}:
     displayName: Area
