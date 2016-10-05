@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:mongo="http://www.mulesoft.org/schema/mule/mongo" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+<mule xmlns:context="http://www.springframework.org/schema/context"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:mongo="http://www.mulesoft.org/schema/mule/mongo" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mongo/current/mule-mongo.xsd">
-    <http:listener-config name="brexit-system-httpListenerConfig" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration" />
+
+	<context:property-placeholder location="classpath:properties\${SANDBOX_DOMAIN}\${SANDBOX_SERVER_SHORT_NAME}\${SANDBOX_NAME}.properties"/>
+    
+<!--     <http:listener-config name="brexit-system-httpListenerConfigO" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration" /> -->
+    <http:listener-config name="brexit-system-httpListenerConfig" host="${application.http.host}" port="${application.http.port}"  doc:name="HTTP Listener Configuration"/>
+    <http:listener-config name="brexit-system-httpListenerConsoleConfig"   host="${application.http.host}" port="${application.console.http.port}"   doc:name="HTTP Listener Configuration"/>
+
+
     <apikit:config name="brexit-system-config" raml="brexit-system.raml" consoleEnabled="false" doc:name="Router" />
     <mongo:config name="Mongo_DB" username="ralph" database="dd" doc:name="Mongo DB" />
     <flow name="brexit-system-main">
@@ -13,7 +22,7 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
         <exception-strategy ref="brexit-system-apiKitGlobalExceptionMapping" doc:name="Reference Exception Strategy" />
     </flow>
     <flow name="brexit-system-console">
-        <http:listener config-ref="brexit-system-httpListenerConfig" path="/console/*" doc:name="HTTP" />
+        <http:listener config-ref="brexit-system-httpListenerConsoleConfig" path="/console/*" doc:name="HTTP" />
         <apikit:console config-ref="brexit-system-config" doc:name="APIkit Console" />
     </flow>
     <flow name="get:/areas:brexit-system-config">
