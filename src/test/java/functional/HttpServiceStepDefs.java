@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.mule.DefaultMuleMessage;
 import org.mule.api.MuleMessage;
 import org.mule.api.client.MuleClient;
+import org.mule.module.http.internal.listener.DefaultHttpListenerConfig;
 import org.mule.tck.junit4.FunctionalTestCase;
 
 import cucumber.api.java.en.Given;
@@ -36,8 +37,12 @@ public class HttpServiceStepDefs extends FunctionalTestCase {
 	@When("^The service is called with a GET method$")
 	public void the_service_is_called_with_a_GET_method() throws Throwable {
 		muleClient = muleContext.getClient();
+		muleContext.getConfiguration().getMuleHomeDirectory();
+		DefaultHttpListenerConfig httpListenerConfig = muleContext.getRegistry().lookupObject("brexit-system-httpListenerConfig");
+		String host = httpListenerConfig.getHost();
+		int port = httpListenerConfig.getPort();
 		MuleMessage muleMessage = new DefaultMuleMessage("", new HashMap<String, Object>(), muleContext);
-		response = muleClient.send("http://localhost:9999/api/areas", muleMessage);
+		response = muleClient.send("http://" + host + ":" + port + "/api/areas", muleMessage);
 	}
 
 	@Then("^The service returns an HTTP response of (\\d+)$")
