@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mule xmlns:context="http://www.springframework.org/schema/context"
-	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:mongo="http://www.mulesoft.org/schema/mule/mongo" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
-http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:mongo="http://www.mulesoft.org/schema/mule/mongo" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
@@ -15,7 +15,7 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
  
 
     <apikit:config name="brexit-system-config" raml="brexit-system.raml" consoleEnabled="false" doc:name="Router" />
-    <mongo:config name="Mongo_DB"  host="51.140.187.136" username="ralph" database="dd" doc:name="Mongo DB" />
+    <mongo:config name="Mongo_DB"  host="${mongo.hostname}" username="ralph" database="${mongo.database.name}" doc:name="Mongo DB" />
     <flow name="brexit-system-main">
         <http:listener config-ref="brexit-system-httpListenerConfig" path="/api/*" doc:name="HTTP" />
         <apikit:router config-ref="brexit-system-config" doc:name="APIkit Router" />
@@ -26,19 +26,19 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
         <apikit:console config-ref="brexit-system-config" doc:name="APIkit Console" />
     </flow>
     <flow name="get:/areas:brexit-system-config">
-        <mongo:find-objects config-ref="Mongo_DB" collection="Area" doc:name="Mongo DB" />
+        <mongo:find-objects config-ref="Mongo_DB" collection="Area" doc:name="findAll" />
         <mongo:mongo-collection-to-json doc:name="CollectionToJson" />
-        <logger level="INFO" doc:name="Logger" message="/areas  Returned : /n#[payload]/n" />
+        <logger level="INFO" doc:name="/areas" message="GET /areas  Returned : #[payload]" />
         <set-payload value="#[payload]" doc:name="Set Payload" />
     </flow>
     
     <flow name="get:/areas/{identity}:brexit-system-config">
-	     <mongo:find-one-object-using-query-map config-ref="Mongo_DB" collection="Area" doc:name="Mongo DB">
+	     <mongo:find-one-object-using-query-map config-ref="Mongo_DB" collection="Area" doc:name="findOneByIdentity">
 	        <mongo:query-attributes>
 	            <mongo:query-attribute key="identity">#[identity]</mongo:query-attribute>
 	        </mongo:query-attributes>
 	   	 </mongo:find-one-object-using-query-map>
-        <logger level="INFO" doc:name="Logger" message="/area/#[identity]  Returned : /n#[payload]/n" />
+        <logger level="INFO" doc:name="/areas/{identity}" message="GET /area/#[identity]  Returned : #[payload]" />
         <set-payload value="#[payload]" doc:name="Set Payload" />
 			<choice-exception-strategy doc:name="Choice Exception Strategy">
 				<catch-exception-strategy doc:name="Catch Exception Strategy" when="#[exception.causedBy(com.mongodb.MongoException)]">
@@ -47,7 +47,7 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
 					<set-variable variableName="errorReasonPhrase" value="Not Found" doc:name="Set reason phrase"/>
 		            <set-property propertyName="Content-Type" value="application/json" doc:name="Property" />
 		            <set-payload value="{ &quot;message&quot;: &quot;Resource not found&quot; }" doc:name="Set Payload" />
-					<set-property propertyName="http.status" value="404"/>
+					<set-property propertyName="http.status" value="404" doc:name="Property"/>
 				</catch-exception-strategy>
 				<rollback-exception-strategy doc:name="Rollback Exception Strategy">
 					<logger level="INFO" doc:name="Logger" message="Unknown error"/>
