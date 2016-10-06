@@ -15,7 +15,7 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
  
 
     <apikit:config name="brexit-system-config" raml="brexit-system.raml" consoleEnabled="false" doc:name="Router" />
-    <mongo:config name="Mongo_DB" username="ralph" database="dd" doc:name="Mongo DB" />
+    <mongo:config name="Mongo_DB"  host="51.140.187.136" username="ralph" database="dd" doc:name="Mongo DB" />
     <flow name="brexit-system-main">
         <http:listener config-ref="brexit-system-httpListenerConfig" path="/api/*" doc:name="HTTP" />
         <apikit:router config-ref="brexit-system-config" doc:name="APIkit Router" />
