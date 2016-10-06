@@ -37,7 +37,7 @@ public class HttpServiceStepDefs extends FunctionalTestCase {
 	public void the_service_is_called_with_a_GET_method() throws Throwable {
 		muleClient = muleContext.getClient();
 		MuleMessage muleMessage = new DefaultMuleMessage("", new HashMap<String, Object>(), muleContext);
-		response = muleClient.send("http://localhost:8181/api/areas", muleMessage);
+		response = muleClient.send("http://localhost:9999/api/areas", muleMessage);
 	}
 
 	@Then("^The service returns an HTTP response of (\\d+)$")
