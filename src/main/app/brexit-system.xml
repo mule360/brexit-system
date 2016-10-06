@@ -17,12 +17,12 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
     <apikit:config name="brexit-system-config" raml="brexit-system.raml" consoleEnabled="false" doc:name="Router" />
     <mongo:config name="Mongo_DB"  host="${mongo.hostname}" username="ralph" database="${mongo.database.name}" doc:name="Mongo DB" />
     <flow name="brexit-system-main">
-        <http:listener config-ref="brexit-system-httpListenerConfig" path="/api/*" doc:name="HTTP" />
+        <http:listener config-ref="brexit-system-httpListenerConfig" path="/api/*" doc:name="API MAIN" />
         <apikit:router config-ref="brexit-system-config" doc:name="APIkit Router" />
         <exception-strategy ref="brexit-system-apiKitGlobalExceptionMapping" doc:name="Reference Exception Strategy" />
     </flow>
     <flow name="brexit-system-console">
-        <http:listener config-ref="brexit-system-httpListenerConsoleConfig" path="/console/*" doc:name="HTTP" />
+        <http:listener config-ref="brexit-system-httpListenerConsoleConfig" path="/console/*" doc:name="API CONSOLE" />
         <apikit:console config-ref="brexit-system-config" doc:name="APIkit Console" />
     </flow>
     <flow name="get:/areas:brexit-system-config">
