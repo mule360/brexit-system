@@ -1,26 +1,28 @@
 package functional;
 
-
 import java.util.HashMap;
+import java.util.List;
 
+import org.junit.Assert;
 import org.mule.DefaultMuleMessage;
 import org.mule.api.MuleMessage;
 import org.mule.api.client.MuleClient;
 import org.mule.module.http.internal.listener.DefaultHttpListenerConfig;
 import org.mule.tck.junit4.FunctionalTestCase;
 
+import com.google.gson.Gson;
+
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.junit.Assert;
 
-public class HttpServiceStepDefs extends FunctionalTestCase {
+public class AreaServiceStepDefs extends FunctionalTestCase {
 
 	private MuleClient muleClient;
 	private MuleMessage response;
-	private String responseContent;
 	
-	public HttpServiceStepDefs() throws Exception {
+	public AreaServiceStepDefs() throws Exception {
 		super.setUpMuleContext();
 	}
 
@@ -29,15 +31,14 @@ public class HttpServiceStepDefs extends FunctionalTestCase {
 		return "brexit-system.xml";
 	}
 
-	@Given("^The Http Service is running$")
-	public void the_Http_Service_is_running() throws Throwable {
+	@Given("^The Areas Rest Service is running$")
+	public void the_Areas_Rest_Service_is_running() throws Throwable {
 		// TODO: Health check call
 	}
 
-	@When("^The service is called with a GET method$")
+	@When("^The service is called with the GET method$")
 	public void the_service_is_called_with_a_GET_method() throws Throwable {
 		muleClient = muleContext.getClient();
-		muleContext.getConfiguration().getMuleHomeDirectory();
 		DefaultHttpListenerConfig httpListenerConfig = muleContext.getRegistry().lookupObject("brexit-system-httpListenerConfig");
 		String host = httpListenerConfig.getHost();
 		int port = httpListenerConfig.getPort();
@@ -49,13 +50,21 @@ public class HttpServiceStepDefs extends FunctionalTestCase {
 	public void the_service_returns_an_HTTP_response_of(int expectedStatus) throws Throwable {
 		Integer httpStatus = response.getInboundProperty("http.status");
 		Assert.assertEquals(new Integer(expectedStatus), httpStatus);
-		responseContent = response.getPayloadAsString();
+	}
+	
+	@And("^The content type is \"(.*?)\"$")
+	public void the_content_type_is(String expectedContentType) throws Throwable {
+		Object contentType = response.getInboundProperty("content-type");
+		Assert.assertEquals(expectedContentType, contentType);
 	}
 
-	@Then("^The payload contains the value \"(.*?)\"$")
-	public void the_payload_contains_the_value(String expectedReturnValue) throws Throwable {
-		// Assert.assertEquals(expectedReturnValue, responseContent);
+	@Then("^The payload contains (\\d+) values$")
+	public void the_payload_contains_the_value(int expectedNumberOfItems) throws Throwable {
+		Gson gson = new Gson();
+		List<?> jsonArray = gson.fromJson(response.getPayloadAsString(), List.class);
+		int actualNumberOfItems = jsonArray.size();
+		Assert.assertEquals(expectedNumberOfItems, actualNumberOfItems);
+		
 	}
-
 
 }
