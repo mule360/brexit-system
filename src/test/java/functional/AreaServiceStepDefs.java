@@ -32,8 +32,8 @@ public class AreaServiceStepDefs extends FunctionalTestCase {
 	}
 
 	@Override
-	protected String getConfigFile() {
-		return "brexit-system.xml";
+	protected String getConfigResources() {
+		return "gateway-out.xml,brexit-system.xml";
 	}
 
 	@Given("^The Areas Rest Service is running$")
@@ -87,6 +87,7 @@ public class AreaServiceStepDefs extends FunctionalTestCase {
 		Assert.assertEquals(ArrayList.class, jsonArray.getClass());
 	}
 
+	@SuppressWarnings("unchecked")
 	@And("^The content is a JSON object$")
 	public void the_content_is_a_JSON_object() throws Throwable {
 		Gson gson = new Gson();
@@ -107,18 +108,14 @@ public class AreaServiceStepDefs extends FunctionalTestCase {
 	public void the_Area_object_contains(Map<String, Object> areaValues) throws Throwable {
 		for (String key : areaValues.keySet()) {
 			Object expectedValue = areaValues.get(key);
-			System.out.println("Key [" + key + "] is of type [" + expectedValue.getClass().getCanonicalName() + "]");
 			Object actualValue = jsonResponseObject.get(key);
-			System.out.println("Actual Value for [" + key + "] is of type [" + actualValue.getClass().getCanonicalName() + "]");
 			if (actualValue instanceof java.lang.Double) {
 				Double expectedValueAsDouble = new Double(expectedValue.toString());
 				Assert.assertEquals(expectedValueAsDouble, actualValue);
 			} else {
 				Assert.assertEquals(expectedValue, actualValue);
 			}
-			int wait = 1;
 		}
-	
 	}
 
 }

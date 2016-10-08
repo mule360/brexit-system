@@ -9,13 +9,11 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
 
 	<context:property-placeholder location="classpath:properties\${SANDBOX_DOMAIN}\${SANDBOX_SERVER_SHORT_NAME}\${SANDBOX_NAME}.properties"/>
     
-<!--     <http:listener-config name="brexit-system-httpListenerConfigO" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration" /> -->
     <http:listener-config name="brexit-system-httpListenerConfig" host="${application.http.host}" port="${application.http.port}"  doc:name="HTTP Listener Configuration"/>
     <http:listener-config name="brexit-system-httpListenerConsoleConfig"   host="${application.http.host}" port="${application.console.http.port}"   doc:name="HTTP Listener Configuration"/>
- 
 
     <apikit:config name="brexit-system-config" raml="brexit-system.raml" consoleEnabled="false" doc:name="Router" />
-    <mongo:config name="Mongo_DB"  host="${mongo.hostname}" username="ralph" database="${mongo.database.name}" doc:name="Mongo DB" />
+
     <flow name="brexit-system-main">
         <http:listener config-ref="brexit-system-httpListenerConfig" path="/api/*" doc:name="API MAIN" >
          <http:response-builder>
@@ -33,34 +31,17 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
         </http:listener>
         <apikit:console config-ref="brexit-system-config" doc:name="APIkit Console" />
     </flow>
+
     <flow name="get:/areas:brexit-system-config">
-        <mongo:find-objects config-ref="Mongo_DB" collection="Area" doc:name="findAll" />
-        <mongo:mongo-collection-to-json doc:name="CollectionToJson" />
+<!--         <mongo:find-objects config-ref="Mongo_DB" collection="Area" doc:name="findAll" /> -->
+<!--         <mongo:mongo-collection-to-json doc:name="CollectionToJson" /> -->
+		<flow-ref name="areas-find-all" doc:name="findAll"/>
         <logger level="INFO" doc:name="/areas" message="GET /areas  Returned : #[payload]" />
         <set-payload value="#[payload]" doc:name="Set Payload" />
     </flow>
     
     <flow name="get:/areas/{identity}:brexit-system-config">
-	     <mongo:find-one-object-using-query-map config-ref="Mongo_DB" collection="Area" doc:name="findOneByIdentity">
-	        <mongo:query-attributes>
-	            <mongo:query-attribute key="identity">#[identity]</mongo:query-attribute>
-	        </mongo:query-attributes>
-	   	 </mongo:find-one-object-using-query-map>
-        <logger level="INFO" doc:name="/areas/{identity}" message="GET /area/#[identity]  Returned : #[payload]" />
-        <set-payload value="#[payload]" doc:name="Set Payload" />
-			<choice-exception-strategy doc:name="Choice Exception Strategy">
-				<catch-exception-strategy doc:name="Catch Exception Strategy" when="#[exception.causedBy(com.mongodb.MongoException)]">
-					<logger level="INFO" doc:name="Logger" message="HANDLING MONGO EXCEPTION #[payload]" />
-					<set-variable variableName="errorStatusCode" value="404" doc:name="Set status code"/>
-					<set-variable variableName="errorReasonPhrase" value="Not Found" doc:name="Set reason phrase"/>
-		            <set-property propertyName="Content-Type" value="application/json" doc:name="Property" />
-		            <set-payload value="{ &quot;message&quot;: &quot;Resource not found&quot; }" doc:name="Set Payload" />
-					<set-property propertyName="http.status" value="404" doc:name="Property"/>
-				</catch-exception-strategy>
-				<rollback-exception-strategy doc:name="Rollback Exception Strategy">
-					<logger level="INFO" doc:name="Logger" message="Unknown error"/>
-				</rollback-exception-strategy>
-			</choice-exception-strategy>
+		<flow-ref name="areas-find-one-by-identity" doc:name="findByIdentity"/>
       </flow>
       
     <apikit:mapping-exception-strategy name="brexit-system-apiKitGlobalExceptionMapping">
