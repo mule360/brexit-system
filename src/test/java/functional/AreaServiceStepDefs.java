@@ -53,7 +53,7 @@ public class AreaServiceStepDefs extends FunctionalTestCase {
 	public void an_API_defined_by(String apiFileName) throws Throwable {
 		System.out.println("Running Feature Tests of API [" + apiFileName + "]");
 		RamlModelBuilder ramlModelBuilder = new RamlModelBuilder();
-		String ramlFile = "C:\\clients\\MULE360\\brexit-system\\src\\main\\api\\brexit-system.raml";
+		String ramlFile = ".\\src\\main\\api\\brexit-system.raml";
 		RamlModelResult result = ramlModelBuilder.buildApi(new File(ramlFile));
 
 		// Process API level properties
