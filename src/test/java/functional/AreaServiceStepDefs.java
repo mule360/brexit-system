@@ -20,6 +20,7 @@ import org.raml.v2.api.model.v08.bodies.BodyLike;
 import org.raml.v2.api.model.v08.bodies.MimeType;
 import org.raml.v2.api.model.v08.methods.Method;
 import org.raml.v2.api.model.v08.resources.Resource;
+import org.raml.v2.api.model.v08.resources.ResourceTypeRef;
 import org.raml.v2.api.model.v08.system.types.ExampleString;
 import org.raml.v2.api.model.v08.system.types.FullUriTemplateString;
 import org.raml.v2.api.model.v08.system.types.MarkdownString;
@@ -74,6 +75,7 @@ public class AreaServiceStepDefs extends FunctionalTestCase {
 			for(Method method : methods) {
 				MarkdownString description = method.description();
 				String methodValue = method.method();
+				System.out.println("Method Desc [" + description.value() + "] Value [" + methodValue + "]");
 				List<BodyLike> body = method.body();
 				for (BodyLike bodyLike : body) {
 					ExampleString example = bodyLike.example();
@@ -81,6 +83,31 @@ public class AreaServiceStepDefs extends FunctionalTestCase {
 					int q = 1;
 				}
 				int x = 1;
+			}
+			// Process Children
+			List<Resource> childResources = resource.resources();
+			for (Resource childResource : childResources) {
+				ResourceTypeRef crType = childResource.type();
+				List<Resource> children = childResource.resources();
+				for(Resource cResource : children) {
+					ResourceTypeRef type = cResource.type();
+					
+					int xx = 1;
+				}
+				
+				List<Method> childMethods = childResource.methods();
+				for(Method childMethod : childMethods) {
+					MarkdownString description = childMethod.description();
+					String methodValue = childMethod.method();					
+					System.out.println("Method Desc [" + description.value() + "] Value [" + methodValue + "]");
+					
+					int z = 1;
+				}
+				
+//				String resourceTypeName = childResource.
+//				System.out.println("Resource Type Name of ChildResource [" + resourceTypeName + "]");
+
+				int z = 1;
 			}
 			int wat = 1;
 		}
