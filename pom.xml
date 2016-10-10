@@ -249,14 +249,15 @@
 		</dependency>
 
 		<!-- TESTING -->
-		<dependency>
-			<groupId>org.raml</groupId>
-			<artifactId>raml-parser-parent</artifactId>
-			<version>1.0.2-SNAPSHOT</version>
-			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/lib/raml-parser-2-1.0.2-SNAPSHOT.jar</systemPath>
-		 </dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.raml</groupId> -->
+<!-- 			<artifactId>raml-parser-parent</artifactId> -->
+<!-- 			<version>1.0.2-SNAPSHOT</version> -->
+<!-- 			<type>jar</type> -->
+<!-- 			<scope>system</scope> -->
+<!-- 			<systemPath>${project.basedir}/src/lib/raml-parser-2-1.0.2-SNAPSHOT.jar</systemPath> -->
+<!-- 		 </dependency> -->
+		 
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>

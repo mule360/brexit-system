@@ -86,12 +86,12 @@ public class AreaServiceStepDefs extends FunctionalTestCase {
 			}
 			// Process Children
 			List<Resource> childResources = resource.resources();
+			ResourceTypeRef resType = resource.type();
 			for (Resource childResource : childResources) {
 				ResourceTypeRef crType = childResource.type();
 				List<Resource> children = childResource.resources();
 				for(Resource cResource : children) {
 					ResourceTypeRef type = cResource.type();
-					
 					int xx = 1;
 				}
 				
@@ -100,7 +100,6 @@ public class AreaServiceStepDefs extends FunctionalTestCase {
 					MarkdownString description = childMethod.description();
 					String methodValue = childMethod.method();					
 					System.out.println("Method Desc [" + description.value() + "] Value [" + methodValue + "]");
-					
 					int z = 1;
 				}
 				
