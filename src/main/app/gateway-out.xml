@@ -26,19 +26,19 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
 	   	 </mongo:find-one-object-using-query-map>
         <logger level="INFO" doc:name="/areas/{identity}" message="GET /area/#[identity]  Returned : #[payload]" />
         <set-payload value="#[payload]" doc:name="Set Payload" />
-			<choice-exception-strategy doc:name="Choice Exception Strategy">
-				<catch-exception-strategy doc:name="Catch Exception Strategy" when="#[exception.causedBy(com.mongodb.MongoException)]">
-					<logger level="INFO" doc:name="Logger" message="HANDLING MONGO EXCEPTION #[payload]" />
-					<set-variable variableName="errorStatusCode" value="404" doc:name="Set status code"/>
-					<set-variable variableName="errorReasonPhrase" value="Not Found" doc:name="Set reason phrase"/>
-		            <set-property propertyName="Content-Type" value="application/json" doc:name="Property" />
-		            <set-payload value="{ &quot;message&quot;: &quot;Resource not found&quot; }" doc:name="Set Payload" />
-					<set-property propertyName="http.status" value="404" doc:name="Property"/>
-				</catch-exception-strategy>
-				<rollback-exception-strategy doc:name="Rollback Exception Strategy">
-					<logger level="INFO" doc:name="Logger" message="Unknown error"/>
-				</rollback-exception-strategy>
-			</choice-exception-strategy>
+		<choice-exception-strategy doc:name="Choice Exception Strategy">
+			<catch-exception-strategy doc:name="Catch Exception Strategy" when="#[exception.causedBy(com.mongodb.MongoException)]">
+				<logger level="INFO" doc:name="Logger" message="HANDLING MONGO EXCEPTION #[payload]" />
+				<set-variable variableName="errorStatusCode" value="404" doc:name="Set status code"/>
+				<set-variable variableName="errorReasonPhrase" value="Not Found" doc:name="Set reason phrase"/>
+	            <set-property propertyName="Content-Type" value="application/json" doc:name="Property" />
+	            <set-payload value="{ &quot;message&quot;: &quot;Resource not found&quot; }" doc:name="Set Payload" />
+				<set-property propertyName="http.status" value="404" doc:name="Property"/>
+			</catch-exception-strategy>
+			<rollback-exception-strategy doc:name="Rollback Exception Strategy">
+				<logger level="INFO" doc:name="Logger" message="Unknown error"/>
+			</rollback-exception-strategy>
+		</choice-exception-strategy>
       </flow>
     
 </mule>

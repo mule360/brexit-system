@@ -1,5 +1,6 @@
 package functional;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,17 @@ import org.mule.api.MuleMessage;
 import org.mule.api.client.MuleClient;
 import org.mule.module.http.internal.listener.DefaultHttpListenerConfig;
 import org.mule.tck.junit4.FunctionalTestCase;
+import org.raml.v2.api.RamlModelBuilder;
+import org.raml.v2.api.RamlModelResult;
+import org.raml.v2.api.model.v08.api.Api;
+import org.raml.v2.api.model.v08.api.DocumentationItem;
+import org.raml.v2.api.model.v08.bodies.BodyLike;
+import org.raml.v2.api.model.v08.bodies.MimeType;
+import org.raml.v2.api.model.v08.methods.Method;
+import org.raml.v2.api.model.v08.resources.Resource;
+import org.raml.v2.api.model.v08.system.types.ExampleString;
+import org.raml.v2.api.model.v08.system.types.FullUriTemplateString;
+import org.raml.v2.api.model.v08.system.types.MarkdownString;
 
 import com.google.gson.Gson;
 
@@ -34,6 +46,48 @@ public class AreaServiceStepDefs extends FunctionalTestCase {
 	@Override
 	protected String getConfigResources() {
 		return "gateway-out.xml,brexit-system.xml";
+	}
+
+	// Background Steps
+	@Given("^An API defined by \"(.*?)\"$")
+	public void an_API_defined_by(String apiFileName) throws Throwable {
+		System.out.println("Running Feature Tests of API [" + apiFileName + "]");
+		RamlModelBuilder ramlModelBuilder = new RamlModelBuilder();
+		String ramlFile = "C:\\clients\\MULE360\\brexit-system\\src\\main\\api\\brexit-system.raml";
+		RamlModelResult result = ramlModelBuilder.buildApi(new File(ramlFile));
+
+		// Process API level properties
+		Api api = result.getApiV08();
+		String title = api.title();
+		String version = api.version();
+		FullUriTemplateString baseUri = api.baseUri();
+		MimeType mediaType = api.mediaType();
+		List<String> protocols = api.protocols();
+		List<DocumentationItem> documentation = api.documentation();
+		
+		// Process RESOURCE level properties
+		List<Resource> resources = api.resources();
+		for (Resource resource : resources) {
+			String displayName = resource.displayName();
+			String resourcePath = resource.resourcePath();
+			List<Method> methods = resource.methods();
+			for(Method method : methods) {
+				MarkdownString description = method.description();
+				String methodValue = method.method();
+				List<BodyLike> body = method.body();
+				for (BodyLike bodyLike : body) {
+					ExampleString example = bodyLike.example();
+					MarkdownString bodyDescription = bodyLike.description();
+					int q = 1;
+				}
+				int x = 1;
+			}
+			int wat = 1;
+		}
+
+		int wait = 1;
+		
+	
 	}
 
 	@Given("^The Areas Rest Service is running$")

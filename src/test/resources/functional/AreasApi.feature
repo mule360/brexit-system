@@ -8,6 +8,9 @@ Feature: Areas API
 	I-WANT-TO:			Test the Rest Service methods
 	SO-THAT-I:				Can verify the service implements the API
 
+Background: List of steps run before each of the scenarios
+Given An API defined by "brexit-system.raml"
+
 Scenario: GET /api/areas succeeds
 Given The Areas Rest Service is running
 When The service endpoint /api/areas  is called with the GET method

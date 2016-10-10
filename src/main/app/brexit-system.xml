@@ -33,8 +33,6 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
     </flow>
 
     <flow name="get:/areas:brexit-system-config">
-<!--         <mongo:find-objects config-ref="Mongo_DB" collection="Area" doc:name="findAll" /> -->
-<!--         <mongo:mongo-collection-to-json doc:name="CollectionToJson" /> -->
 		<flow-ref name="areas-find-all" doc:name="findAll"/>
         <logger level="INFO" doc:name="/areas" message="GET /areas  Returned : #[payload]" />
         <set-payload value="#[payload]" doc:name="Set Payload" />
