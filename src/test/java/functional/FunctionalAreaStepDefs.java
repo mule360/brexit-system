@@ -1,4 +1,4 @@
-package integration;
+package functional;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -33,20 +33,20 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-public class AreaServiceStepDefs extends FunctionalTestCase {
+public class FunctionalAreaStepDefs extends FunctionalTestCase {
 
 	private MuleClient muleClient;
 	private MuleMessage response;
 	private Map<String, String> uriParameterMap = new HashMap<>();
 	private Map<String, Object> jsonResponseObject = new HashMap<>();
 	
-	public AreaServiceStepDefs() throws Exception {
+	public FunctionalAreaStepDefs() throws Exception {
 		super.setUpMuleContext();
 	}
 
 	@Override
 	protected String getConfigResources() {
-		return "flows/gateway-out.xml,flows/gateway-in.xml,brexit-system.xml";
+		return "flows/gateway-out-test.xml,flows/gateway-in-test.xml,flows/brexit-system.xml";
 	}
 
 	// Background Steps

@@ -1,9 +1,6 @@
 package io.mule360.system;
 
 import java.io.File;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
@@ -50,14 +47,9 @@ public class FileReader implements Callable {
 	}
 
 	public String readCurrentFileFromClassPath() throws Exception {
-		ClassLoader loader = Thread.currentThread().getContextClassLoader();
-		URL url1 = loader.getResource(dataDirectory + "/" + fileName);
-		String rootPath = this.getClass().getResource("").getPath();
 		Resource resource = new ClassPathResource(dataDirectory + "/" + fileName, this.getClass().getClassLoader());
-//		URI uri = resource.getURI();
-//		resource.getURL().
-		String resourceFileName = resource.getFilename();
 		String fileName = resource.getURL().getFile();
+		System.out.println("Reading from file path " + fileName);
 		String content = FileUtils.readFileToString(new File(fileName));
 		return content;
 	}
