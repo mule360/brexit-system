@@ -46,7 +46,7 @@ public class FunctionalAreaStepDefs extends FunctionalTestCase {
 
 	@Override
 	protected String getConfigResources() {
-		return "flows/gateway-out-test.xml,flows/gateway-in-test.xml,flows/brexit-system.xml";
+		return "brexit-system-test.xml";
 	}
 
 	// Background Steps

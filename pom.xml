@@ -111,6 +111,13 @@
 			                    property is true
 			                -->
 			                <skipTests>${skip.integration.tests}</skipTests>
+			                <!-- Excludes integration tests when unit tests are run -->
+					        <excludes>
+					            <exclude>**/RunFunctionalTests.java</exclude>
+					        </excludes>
+						<includes>
+							<include>**/RunIntegrationTests.java</include>
+						</includes>
 			            </configuration>
 			        </execution>
 			    </executions>

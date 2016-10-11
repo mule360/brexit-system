@@ -46,7 +46,7 @@ public class IntegrationAreaServiceStepDefs extends FunctionalTestCase {
 
 	@Override
 	protected String getConfigResources() {
-		return "flows/gateway-out.xml,flows/gateway-in.xml,brexit-system.xml";
+		return "brexit-system.xml,gateway-in.xml,gateway-out.xml";
 	}
 
 	// Background Steps

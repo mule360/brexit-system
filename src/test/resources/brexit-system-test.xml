@@ -14,6 +14,10 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
 
     <apikit:config name="test-brexit-system-config" raml="brexit-system.raml" consoleEnabled="false" doc:name="Router" />
 
+	<spring:beans>
+	  <spring:import resource="classpath:gateway-in-test.xml"/>
+	</spring:beans>
+
     <flow name="test-brexit-system-main">
         <http:listener config-ref="test-brexit-system-httpListenerConfig" path="/api/*" doc:name="API MAIN" >
          <http:response-builder>
