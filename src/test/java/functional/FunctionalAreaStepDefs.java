@@ -124,7 +124,7 @@ public class FunctionalAreaStepDefs extends FunctionalTestCase {
 	@When("^The service endpoint /api/areas  is called with the GET method$")
 	public void the_service_endpoint_api_areas_is_called_with_the_GET_method() throws Throwable {
 		muleClient = muleContext.getClient();
-		DefaultHttpListenerConfig httpListenerConfig = muleContext.getRegistry().lookupObject("brexit-system-httpListenerConfig");
+		DefaultHttpListenerConfig httpListenerConfig = muleContext.getRegistry().lookupObject("test-brexit-system-httpListenerConfig");
 		String host = httpListenerConfig.getHost();
 		int port = httpListenerConfig.getPort();
 		MuleMessage muleMessage = new DefaultMuleMessage("", new HashMap<String, Object>(), muleContext);
@@ -140,7 +140,7 @@ public class FunctionalAreaStepDefs extends FunctionalTestCase {
 	@When("^The service endpoint /api/areas/identity is called with the GET method$")
 	public void the_service_endpoint_api_areas_identity_is_called_with_the_GET_method() throws Throwable {
 		muleClient = muleContext.getClient();
-		DefaultHttpListenerConfig httpListenerConfig = muleContext.getRegistry().lookupObject("brexit-system-httpListenerConfig");
+		DefaultHttpListenerConfig httpListenerConfig = muleContext.getRegistry().lookupObject("test-brexit-system-httpListenerConfig");
 		String host = httpListenerConfig.getHost();
 		int port = httpListenerConfig.getPort();
 		MuleMessage muleMessage = new DefaultMuleMessage("", new HashMap<String, Object>(), muleContext);
