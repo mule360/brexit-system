@@ -31,18 +31,8 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
         </http:listener>
         <apikit:console config-ref="brexit-system-config" doc:name="APIkit Console" />
     </flow>
-
-    <flow name="get:/areas:brexit-system-config">
-		<flow-ref name="areas-find-all" doc:name="findAll"/>
-        <logger level="INFO" doc:name="/areas" message="GET /areas  Returned : #[payload]" />
-        <set-payload value="#[payload]" doc:name="Set Payload" />
-    </flow>
-    
-    <flow name="get:/areas/{identity}:brexit-system-config">
-		<flow-ref name="areas-find-one-by-identity" doc:name="findByIdentity"/>
-      </flow>
-      
-    <apikit:mapping-exception-strategy name="brexit-system-apiKitGlobalExceptionMapping">
+  
+   <apikit:mapping-exception-strategy name="brexit-system-apiKitGlobalExceptionMapping">
 <!--         <apikit:mapping statusCode="404"> -->
 <!--             <apikit:exception value="org.mule.module.apikit.exception.NotFoundException" /> -->
 <!--             <set-property propertyName="Content-Type" value="application/json" doc:name="Property" /> -->
@@ -74,4 +64,5 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
             <set-payload value="{ &quot;message&quot;: &quot;Bad request&quot; }" doc:name="Set Payload" />
         </apikit:mapping>
     </apikit:mapping-exception-strategy>
+
 </mule>

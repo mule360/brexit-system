@@ -1,18 +1,19 @@
 #%RAML 0.8
 title: Brexit System Layer
 version: 1.0.development
-baseUri: http:/brexit-system.apps.mule360.io/api/
+baseUri: http://brexit-system.apps.mule360.io/api/
 mediaType: application/json
 protocols: [HTTP]
 documentation:
-  - title: Brexit System Layer API
+  - title: The Brexit System Layer API
     content:  |
       Some thing about the API
 
 /areas:
   displayName: Areas
+  description: The Areas collection resource
   get:
-    description: Get a list of all the areas
+    description: GET all the Area resources
     responses:
       200:
         body:
@@ -59,8 +60,9 @@ documentation:
               ]
   /{identity}:
     displayName: Area
+    description: A single Area resource
     get:
-      description: A single Area
+      description: GET a single Area resource by it's identity
       responses:
         200:
           body:

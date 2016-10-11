@@ -19,7 +19,7 @@ SO-THAT-I:				Can verify the service implements the API
      Then The service returns an HTTP response of 200
       And The content type is "application/json"
       And The content is a JSON array
-      And The content contains 1 values
+      And The content contains 399 values
   
   @GET_One @Succeeds
   Scenario: GET /api/areas/{identity} succeeds

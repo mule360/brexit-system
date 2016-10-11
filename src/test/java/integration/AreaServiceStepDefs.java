@@ -1,4 +1,4 @@
-package functional;
+package integration;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class AreaServiceStepDefs extends FunctionalTestCase {
 
 	@Override
 	protected String getConfigResources() {
-		return "flows/gateway-out-test.xml,flows/gateway-in-test.xml,brexit-system.xml";
+		return "flows/gateway-out.xml,flows/gateway-in.xml,brexit-system.xml";
 	}
 
 	// Background Steps

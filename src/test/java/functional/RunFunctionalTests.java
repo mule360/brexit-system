@@ -10,5 +10,5 @@ import org.junit.runner.RunWith;
         format = {"pretty", "json:target/cucumber-json"},
         features = "src/test/resources/functional"
 )
-public class RunCucumberTests {
+public class RunFunctionalTests {
 }
