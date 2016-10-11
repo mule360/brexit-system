@@ -10,15 +10,15 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
 	<context:property-placeholder location="classpath:properties\${SANDBOX_DOMAIN}\${SANDBOX_SERVER_SHORT_NAME}\${SANDBOX_NAME}.properties"/>
 
     <flow name="get:/areas:brexit-system-config">
-       	<flow-ref name="areas-find-all" doc:name="findAll"/>           
-		<logger level="INFO" doc:name="Main Flow Used" message="GET /areas  Returned : #[payload]" />
+		<flow-ref name="areas-find-all" doc:name="findAll"/>      
+		<logger level="INFO" doc:name="Main Flow Used" message="GET /areas  Returned : #[payload]" />     
         <set-payload value="#[payload]" doc:name="Set Payload" />
     </flow>
     
     <flow name="get:/areas/{identity}:brexit-system-config">
-		<flow-ref name="areas-find-one-by-identity" doc:name="findOneByIdentity" />           
-		<logger level="INFO" doc:name="Main Flow Used" message="GET /areas/{identity}  Returned : #[payload]" />
+		<flow-ref name="areas-find-one-by-identity" doc:name="findOneByIdentity"/>      
+		<logger level="INFO" doc:name="Main Flow Used" message="GET /areas/{identity}  Returned : #[payload]" />     
 		<set-payload value="#[payload]" doc:name="Set Payload" />
-      </flow>
+	</flow>
       
 </mule>
