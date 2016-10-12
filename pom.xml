@@ -80,9 +80,9 @@
 				<configuration>
 				 	<skipTests>${skip.unit.tests}</skipTests>
 					  <!-- Excludes integration tests when unit tests are run -->
-				        <excludes>
-				            <exclude>**/RunIntegrationTests.java</exclude>
-				        </excludes>
+			        <excludes>
+			            <exclude>**/RunIntegrationTests.java</exclude>
+			        </excludes>
 					<includes>
 						<include>**/RunFunctionalTests.java</include>
 					</includes>
@@ -95,10 +95,6 @@
 			    <artifactId>maven-failsafe-plugin</artifactId>
 			    <version>2.18</version>
 			    <executions>
-			        <!--
-			            Invokes both the integration-test and the verify goals of the
-			            Failsafe Maven plugin
-			        -->
 			        <execution>
 			            <id>integration-tests</id>
 			            <goals>
@@ -106,10 +102,6 @@
 			                <goal>verify</goal>
 			            </goals>
 			            <configuration>
-			                <!--
-			                    Skips integration tests if the value of skip.integration.tests
-			                    property is true
-			                -->
 			                <skipTests>${skip.integration.tests}</skipTests>
 			                <!-- Excludes integration tests when unit tests are run -->
 					        <excludes>
@@ -147,42 +139,50 @@
 				</executions>
 			</plugin>
 
-<!-- 		    <plugin> -->
-<!-- 		        <groupId>org.mule.tools</groupId> -->
-<!-- 		        <artifactId>muleesb-maven-plugin</artifactId> -->
-<!-- 		        <version>1.0</version> -->
-<!-- 		        <configuration> -->
-<!-- 		            <muleHome>${mule.home}</muleHome> -->
-<!-- 		            <applications> -->
-<!-- 		                <application>${app.location}</application> -->
-<!-- 		            </applications> -->
-<!-- 		        </configuration> -->
-<!-- 		        <executions> -->
-<!-- 		            <execution> -->
-<!-- 		                <id>deploy</id> -->
-<!-- 		                <goals> -->
-<!-- 		                    <goal>start</goal> -->
-<!-- 		                </goals> -->
-<!-- 		            </execution> -->
-<!-- 		        </executions> -->
-<!-- 		    </plugin> -->
-
 			<plugin>
-			<groupId>org.mule.tools.maven</groupId>
-			<artifactId>mule-app-maven-plugin</artifactId>
-			<version>${mule.tools.version}</version>
-			<extensions>true</extensions>
-			<configuration>
-			<copyToAppsDirectory>false</copyToAppsDirectory>
-			<inclusions>
-                        <inclusion>
-                            <groupId>org.mule.modules</groupId>
-                            <artifactId>mule-module-mongo</artifactId>
-                        </inclusion>
-                    </inclusions>
-                </configuration>
+				<groupId>org.mule.tools.maven</groupId>
+				<artifactId>mule-maven-plugin</artifactId>
+				<version>2.1.1</version>
+				<configuration>
+			        <deploymentType>standalone</deploymentType>
+			        <muleVersion>3.8.0</muleVersion>
+			        <muleHome>C:\sandbox\workspaces\dd\.mule</muleHome>
+			    </configuration>
+			    <executions>
+			        <execution>
+			            <id>deploy</id>
+			            <phase>deploy</phase>
+			            <goals>
+			                <goal>deploy</goal>
+			            </goals>
+			        </execution>
+			    </executions>
 			</plugin>
 
+			<plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-deploy-plugin</artifactId>
+			  <configuration>
+			    <skip>true</skip>
+			  </configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.mule.tools.maven</groupId>
+				<artifactId>mule-app-maven-plugin</artifactId>
+				<version>${mule.tools.version}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<copyToAppsDirectory>false</copyToAppsDirectory>
+					<inclusions>
+						<inclusion>
+							<groupId>org.mule.modules</groupId>
+							<artifactId>mule-module-mongo</artifactId>
+						</inclusion>
+					</inclusions>
+				</configuration>
+			</plugin>
+			
 			<plugin>
 				<groupId>net.masterthought</groupId>
 				<artifactId>maven-cucumber-reporting</artifactId>
@@ -240,6 +240,7 @@
 				<artifactId>build-helper-maven-plugin</artifactId>
 				<version>1.7</version>
 				<executions>
+					<!-- Add Mule Resources -->
 					<execution>
 						<id>add-resource</id>
 						<phase>generate-resources</phase>
@@ -260,44 +261,41 @@
 							</resources>
 						</configuration>
 					</execution>
-
-				<!-- Add a new source directory to our build -->
-				<execution>
-				    <id>add-integration-test-sources</id>
-				    <phase>generate-test-sources</phase>
-				    <goals>
-				        <goal>add-test-source</goal>
-				    </goals>
-				    <configuration>
-				        <!-- Configures the source directory of our integration tests -->
-				        <sources>
-				            <source>src/test/java/integration</source>
-				        </sources>
-				    </configuration>
-				</execution>
-				        <!-- Add a new resource directory to our build -->
-				<execution>
-				<id>add-integration-test-resources</id>
-				<phase>generate-test-resources</phase>
-				<goals>
-				    <goal>add-test-resource</goal>
-				</goals>
-				<configuration>
-				    <!-- Configures the resource directory of our integration tests -->
-				    <resources>
-				        <!--
-				            Placeholders that are found from the files located in the configured resource
-				            directories are replaced with the property values found from the profile
-				            specific configuration file.
-				        -->
-				        <resource>
-				            <filtering>true</filtering>
-				            <directory>src/test/resources/integration</directory>
-				        </resource>
-				    </resources>
-				</configuration>
-				</execution>
-		</executions>
+					
+					<!-- Add Integration Test Sources -->
+					<execution>
+						<id>add-integration-test-sources</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<!-- Configures the source directory of our integration tests -->
+							<sources>
+								<source>src/test/java/integration</source>
+							</sources>
+						</configuration>
+					</execution>
+					
+					<!-- Add Integration Test Resources -->
+					<execution>
+						<id>add-integration-test-resources</id>
+						<phase>generate-test-resources</phase>
+						<goals>
+							<goal>add-test-resource</goal>
+						</goals>
+						<configuration>
+							<!-- Configures the resource directory of our integration tests -->
+							<resources>
+								<resource>
+									<filtering>true</filtering>
+									<directory>src/test/resources/integration</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -500,6 +498,11 @@
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
+		</pluginRepository>
+		
+		<pluginRepository>
+			<id>mule-public</id>
+			<url>https://repository.mulesoft.org/nexus/content/repositories/releases</url>
 		</pluginRepository>
 
 	</pluginRepositories>
