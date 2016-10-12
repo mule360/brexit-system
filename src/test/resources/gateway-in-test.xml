@@ -8,7 +8,6 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mongo/current/mule-mongo.xsd">
 
 	<context:property-placeholder location="classpath:properties\${SANDBOX_DOMAIN}\${SANDBOX_SERVER_SHORT_NAME}\${SANDBOX_NAME}.properties"/>
-
     
     <spring:beans>
         <spring:bean id="AreasReader" name="AreasFileReader" class="io.mule360.system.FileReader" autowire="byType">
