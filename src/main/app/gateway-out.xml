@@ -45,25 +45,18 @@ http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mul
         </mongo:find-objects-using-query-map>
         <mongo:mongo-collection-to-json doc:name="CollectionToJson" />
 	   	 <json:json-to-object-transformer returnClass="java.util.List" doc:name="JSON to List"/>
-        <scripting:transformer doc:name="Strip Mongo Fields">
-            <scripting:script engine="Groovy"><![CDATA[
- 				System.out.println("PAYLOAD CLASS = " + payload.getClass().getName());
- 				List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
- 				List payloadList = (List)payload;
- 				for (int i = 0;  i < payloadList.size(); i++) {
- 					Map<String, Object> item = (Map<String, Object>)payloadList.get(i);
- 	            	item.remove("_id");
- 					result.add(item);
- 				}
- 				return result;
- 				]]></scripting:script>
-        </scripting:transformer>
+
+		<foreach doc:name="Each Area">
+			<expression-component doc:name="Remove _ID">payload.remove('_id')</expression-component>
+		</foreach>
+
 		<json:object-to-json-transformer  sourceClass="java.util.List"  doc:name="List to JSON"/>
-        <set-payload value="#[payload]" doc:name="Set Payload" />
+        <logger level="INFO" doc:name="/areas" message="Mongo GET /areas Returned : #[payload]" />
+
     </flow>
     
 	<flow name="areas-find-one-by-identity">
-	     <mongo:find-one-object-using-query-map config-ref="Mongo_DB" collection="Area" doc:name="findOneByIdentity">
+	     <mongo:find-one-object-using-query-map config-ref="Mongo_DB" collection="Area" doc:name="findByIdentity">
 	        <mongo:query-attributes>
 	            <mongo:query-attribute key="identity">#[identity]</mongo:query-attribute>
 	        </mongo:query-attributes>
@@ -98,17 +91,11 @@ http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mul
 </mongo:find-one-object-using-query-map>
 	        <mongo:dbobject-to-json doc:name="DBObjectToJSON" />
 	   	 <json:json-to-object-transformer returnClass="java.util.Map" doc:name="JSON to Map"/>
-		<expression-component doc:name="Expression">payload.remove('_id')</expression-component>
+		<expression-component doc:name="Remove _ID">payload.remove('_id')</expression-component>
        	<json:object-to-json-transformer sourceClass="java.util.Map"  doc:name="Map to JSON" />
-<!--         <scripting:transformer doc:name="Strip Mongo Fields"> -->
-<!--             <scripting:script engine="Groovy"><![CDATA[ -->
-<!--              	payload.remove("_id");  -->
-<!--  				return payload;  -->
-<!--  				]]></scripting:script> -->
-<!--         </scripting:transformer> -->
-       
         <logger level="INFO" doc:name="/areas/{identity}" message="Mongo GET /area/#[identity]  Returned : #[payload]" />
-        <set-payload value="#[payload]" doc:name="Set Payload" />
+<!--         <set-payload value="#[payload]" doc:name="Set Payload" /> -->
+	
 		<choice-exception-strategy doc:name="Choice Exception Strategy">
 			<catch-exception-strategy doc:name="Catch Exception Strategy" when="#[exception.causedBy(com.mongodb.MongoException)]">
 				<logger level="INFO" doc:name="Logger" message="HANDLING MONGO EXCEPTION #[payload]" />

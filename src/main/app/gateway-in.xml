@@ -11,13 +11,13 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
 
     <flow name="get:/areas:brexit-system-config">
 		<flow-ref name="areas-find-all" doc:name="findAll"/>      
-		<logger level="INFO" doc:name="Main Flow Used" message="GET /areas  Returned : #[payload]" />     
+		<logger level="INFO" doc:name="GET /areas" message="GET /areas  Returned : #[payload]" />     
         <set-payload value="#[payload]" doc:name="Set Payload" />
     </flow>
     
     <flow name="get:/areas/{identity}:brexit-system-config">
-		<flow-ref name="areas-find-one-by-identity" doc:name="findOneByIdentity"/>      
-		<logger level="INFO" doc:name="Main Flow Used" message="GET /areas/{identity}  Returned : #[payload]" />     
+		<flow-ref name="areas-find-one-by-identity" doc:name="findByIdentity"/>      
+		<logger level="INFO" doc:name="GET /areas/{identity}" message="GET /areas/{identity}  Returned : #[payload]" />     
 		<set-payload value="#[payload]" doc:name="Set Payload" />
 	</flow>
       
