@@ -12,25 +12,51 @@ http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mul
 	<context:property-placeholder location="classpath:properties\${SANDBOX_DOMAIN}\${SANDBOX_SERVER_SHORT_NAME}\${SANDBOX_NAME}.properties"/>
     
     <mongo:config name="Mongo_DB"  host="${mongo.hostname}" username="ralph" database="${mongo.database.name}" doc:name="Mongo DB" />
-    
 	<flow name="areas-find-all">
-        <mongo:find-objects config-ref="Mongo_DB" collection="Area" doc:name="findAll" />
+               <mongo:find-objects-using-query-map config-ref="Mongo_DB" doc:name="Areas" collection="Area" >
+        	<mongo:fields>
+				<mongo:field>areaSize</mongo:field>
+				<mongo:field>areaTypeCode</mongo:field>
+				<mongo:field>areaTypeName</mongo:field>
+				<mongo:field>country</mongo:field>
+				<mongo:field>electorate</mongo:field>
+				<mongo:field>femalePopulation</mongo:field>
+				<mongo:field>gss</mongo:field>
+				<mongo:field>identity</mongo:field>
+				<mongo:field>latitudeMaximum</mongo:field>
+				<mongo:field>latitudeMiddle</mongo:field>
+				<mongo:field>latitudeMinimum</mongo:field>
+				<mongo:field>leaveVotes</mongo:field>
+				<mongo:field>longitudeMaximum</mongo:field>
+				<mongo:field>longitudeMiddle</mongo:field>
+				<mongo:field>longitudeMinimum</mongo:field>
+				<mongo:field>malePopulation</mongo:field>
+				<mongo:field>mapItId</mongo:field>
+				<mongo:field>name</mongo:field>
+				<mongo:field>ons</mongo:field>
+				<mongo:field>regionCode</mongo:field>
+				<mongo:field>regionName</mongo:field>
+				<mongo:field>registered</mongo:field>
+				<mongo:field>remainVotes</mongo:field>
+				<mongo:field>totalPopulation</mongo:field>
+				<mongo:field>unitId</mongo:field>
+				<mongo:field>validVotes</mongo:field>
+        </mongo:fields>
+        </mongo:find-objects-using-query-map>
         <mongo:mongo-collection-to-json doc:name="CollectionToJson" />
 	   	 <json:json-to-object-transformer returnClass="java.util.List" doc:name="JSON to List"/>
         <scripting:transformer doc:name="Strip Mongo Fields">
             <scripting:script engine="Groovy"><![CDATA[
-				System.out.println("PAYLOAD CLASS = " + payload.getClass().getName());
-				List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
-				List payloadList = (List)payload;
-				for (int i = 0;  i < payloadList.size(); i++) {
-					Map<String, Object> item = (Map<String, Object>)payloadList.get(i);
-	            	item.remove("_id");
-					item.remove("_class");
-					item.remove("links");
-					result.add(item);
-				}
-				return result;
-				]]></scripting:script>
+ 				System.out.println("PAYLOAD CLASS = " + payload.getClass().getName());
+ 				List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+ 				List payloadList = (List)payload;
+ 				for (int i = 0;  i < payloadList.size(); i++) {
+ 					Map<String, Object> item = (Map<String, Object>)payloadList.get(i);
+ 	            	item.remove("_id");
+ 					result.add(item);
+ 				}
+ 				return result;
+ 				]]></scripting:script>
         </scripting:transformer>
 		<json:object-to-json-transformer  sourceClass="java.util.List"  doc:name="List to JSON"/>
         <set-payload value="#[payload]" doc:name="Set Payload" />
@@ -41,16 +67,46 @@ http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mul
 	        <mongo:query-attributes>
 	            <mongo:query-attribute key="identity">#[identity]</mongo:query-attribute>
 	        </mongo:query-attributes>
-	   	 </mongo:find-one-object-using-query-map>
+        	<mongo:fields>
+				<mongo:field>areaSize</mongo:field>
+				<mongo:field>areaTypeCode</mongo:field>
+				<mongo:field>areaTypeName</mongo:field>
+				<mongo:field>country</mongo:field>
+				<mongo:field>electorate</mongo:field>
+				<mongo:field>femalePopulation</mongo:field>
+				<mongo:field>gss</mongo:field>
+				<mongo:field>identity</mongo:field>
+				<mongo:field>latitudeMaximum</mongo:field>
+				<mongo:field>latitudeMiddle</mongo:field>
+				<mongo:field>latitudeMinimum</mongo:field>
+				<mongo:field>leaveVotes</mongo:field>
+				<mongo:field>longitudeMaximum</mongo:field>
+				<mongo:field>longitudeMiddle</mongo:field>
+				<mongo:field>longitudeMinimum</mongo:field>
+				<mongo:field>malePopulation</mongo:field>
+				<mongo:field>mapItId</mongo:field>
+				<mongo:field>name</mongo:field>
+				<mongo:field>ons</mongo:field>
+				<mongo:field>regionCode</mongo:field>
+				<mongo:field>regionName</mongo:field>
+				<mongo:field>registered</mongo:field>
+				<mongo:field>remainVotes</mongo:field>
+				<mongo:field>totalPopulation</mongo:field>
+				<mongo:field>unitId</mongo:field>
+				<mongo:field>validVotes</mongo:field>
+        </mongo:fields>
+</mongo:find-one-object-using-query-map>
+	        <mongo:dbobject-to-json doc:name="DBObjectToJSON" />
 	   	 <json:json-to-object-transformer returnClass="java.util.Map" doc:name="JSON to Map"/>
-        <scripting:transformer doc:name="Strip Mongo Fields">
-            <scripting:script engine="Groovy"><![CDATA[
-            	payload.remove("_id");
-				payload.remove("_class");
-				payload.remove("links");
-				return payload;
-				]]></scripting:script>
-        </scripting:transformer>
+		<expression-component doc:name="Expression">payload.remove('_id')</expression-component>
+       	<json:object-to-json-transformer sourceClass="java.util.Map"  doc:name="Map to JSON" />
+<!--         <scripting:transformer doc:name="Strip Mongo Fields"> -->
+<!--             <scripting:script engine="Groovy"><![CDATA[ -->
+<!--              	payload.remove("_id");  -->
+<!--  				return payload;  -->
+<!--  				]]></scripting:script> -->
+<!--         </scripting:transformer> -->
+       
         <logger level="INFO" doc:name="/areas/{identity}" message="Mongo GET /area/#[identity]  Returned : #[payload]" />
         <set-payload value="#[payload]" doc:name="Set Payload" />
 		<choice-exception-strategy doc:name="Choice Exception Strategy">
