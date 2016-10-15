@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns:context="http://www.springframework.org/schema/context"
-	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:mongo="http://www.mulesoft.org/schema/mule/mongo" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd
+<mule xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:mongo="http://www.mulesoft.org/schema/mule/mongo" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mongo/current/mule-mongo.xsd">
+http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mongo/current/mule-mongo.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd">
 
 	<context:property-placeholder location="classpath:properties\${SANDBOX_DOMAIN}\${SANDBOX_SERVER_SHORT_NAME}\${SANDBOX_NAME}.properties"/>
     
@@ -14,7 +16,23 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
 	<flow name="areas-find-all">
         <mongo:find-objects config-ref="Mongo_DB" collection="Area" doc:name="findAll" />
         <mongo:mongo-collection-to-json doc:name="CollectionToJson" />
-        <logger level="INFO" doc:name="/areas" message="GET /areas  Returned : #[payload]" />
+	   	 <json:json-to-object-transformer returnClass="java.util.List" doc:name="JSON to List"/>
+        <scripting:transformer doc:name="Strip Mongo Fields">
+            <scripting:script engine="Groovy"><![CDATA[
+				System.out.println("PAYLOAD CLASS = " + payload.getClass().getName());
+				List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+				List payloadList = (List)payload;
+				for (int i = 0;  i < payloadList.size(); i++) {
+					Map<String, Object> item = (Map<String, Object>)payloadList.get(i);
+	            	item.remove("_id");
+					item.remove("_class");
+					item.remove("links");
+					result.add(item);
+				}
+				return result;
+				]]></scripting:script>
+        </scripting:transformer>
+		<json:object-to-json-transformer  sourceClass="java.util.List"  doc:name="List to JSON"/>
         <set-payload value="#[payload]" doc:name="Set Payload" />
     </flow>
     
@@ -24,7 +42,16 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
 	            <mongo:query-attribute key="identity">#[identity]</mongo:query-attribute>
 	        </mongo:query-attributes>
 	   	 </mongo:find-one-object-using-query-map>
-        <logger level="INFO" doc:name="/areas/{identity}" message="GET /area/#[identity]  Returned : #[payload]" />
+	   	 <json:json-to-object-transformer returnClass="java.util.Map" doc:name="JSON to Map"/>
+        <scripting:transformer doc:name="Strip Mongo Fields">
+            <scripting:script engine="Groovy"><![CDATA[
+            	payload.remove("_id");
+				payload.remove("_class");
+				payload.remove("links");
+				return payload;
+				]]></scripting:script>
+        </scripting:transformer>
+        <logger level="INFO" doc:name="/areas/{identity}" message="Mongo GET /area/#[identity]  Returned : #[payload]" />
         <set-payload value="#[payload]" doc:name="Set Payload" />
 		<choice-exception-strategy doc:name="Choice Exception Strategy">
 			<catch-exception-strategy doc:name="Catch Exception Strategy" when="#[exception.causedBy(com.mongodb.MongoException)]">
