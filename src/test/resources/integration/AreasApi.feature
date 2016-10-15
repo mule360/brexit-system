@@ -30,9 +30,9 @@ SO-THAT-I:				Can verify the service implements the API
       And The content type is "application/json"
       And The content is a JSON object
       And The Area object contains 
-      | areaSize         | 21574981.58999999             | 
-      | areaTypeCode     | LBO                           | 
-      | areaTypeName     | London borough                | 
+      | areaSize                     | 21574981.58999999             | 
+      | areaTypeCode         | LBO                           | 
+      | areaTypeName       | London borough                | 
       | country          | England                       | 
       | electorate       | 167820                        | 
       | femalePopulation | 141787                        | 

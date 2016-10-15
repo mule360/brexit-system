@@ -50,9 +50,9 @@ http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mul
 			<expression-component doc:name="Remove _ID">payload.remove('_id')</expression-component>
 		</foreach>
 
-		<json:object-to-json-transformer  sourceClass="java.util.List"  doc:name="List to JSON"/>
+		<json:object-to-json-transformer  sourceClass="java.util.List"  doc:name="List to JSON" mimeType="application/json"/>
         <logger level="INFO" doc:name="/areas" message="Mongo GET /areas Returned : #[payload]" />
-
+		<set-payload  doc:name="Payload" value="#[payload]" />
     </flow>
     
 	<flow name="areas-find-one-by-identity">
