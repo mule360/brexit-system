@@ -30,7 +30,6 @@ SO-THAT-I:				Can verify the service implements the API
       And The content type is "application/json"
       And The content is a JSON object
       And The Area object contains 
-      | _class           | io.dd.brexit.model.Area       | 
       | areaSize         | 21574981.58999999             | 
       | areaTypeCode     | LBO                           | 
       | areaTypeName     | London borough                | 
