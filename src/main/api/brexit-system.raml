@@ -5,15 +5,15 @@ baseUri: http://brexit-system.apps.mule360.io/api/
 mediaType: application/json
 protocols: [HTTP]
 documentation:
-  - title: The Brexit System Layer API
+  - title: The Brexit System Layer API. This defines the only interface to all System Resources 
     content:  |
       Some thing about the API
 
 /areas:
   displayName: Areas
-  description: The Areas collection resource
+  description: The collection of Areas where Brexit occurred
   get:
-    description: GET all the Area resources
+    description: GET all the Brexit Areas
     responses:
       200:
         body:
@@ -60,9 +60,9 @@ documentation:
               ]
   /{identity}:
     displayName: Area
-    description: A single Area resource
+    description: A single Area where Brexit occurred
     get:
-      description: GET a single Area resource by it's identity
+      description: GET a single Brexit Area by it's identity
       responses:
         200:
           body:
