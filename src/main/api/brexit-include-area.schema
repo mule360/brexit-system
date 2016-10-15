@@ -1,0 +1,112 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "areaSize": {
+      "type": "number"
+    },
+    "areaTypeCode": {
+      "type": "string"
+    },
+    "areaTypeName": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "electorate": {
+      "type": "integer"
+    },
+    "femalePopulation": {
+      "type": "integer"
+    },
+    "gss": {
+      "type": "string"
+    },
+    "identity": {
+      "type": "string"
+    },
+    "latitudeMaximum": {
+      "type": "string"
+    },
+    "latitudeMiddle": {
+      "type": "string"
+    },
+    "latitudeMinimum": {
+      "type": "string"
+    },
+    "leaveVotes": {
+      "type": "integer"
+    },
+    "longitudeMaximum": {
+      "type": "string"
+    },
+    "longitudeMiddle": {
+      "type": "string"
+    },
+    "longitudeMinimum": {
+      "type": "string"
+    },
+    "malePopulation": {
+      "type": "integer"
+    },
+    "mapItId": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "ons": {
+      "type": "string"
+    },
+    "regionCode": {
+      "type": "string"
+    },
+    "regionName": {
+      "type": "string"
+    },
+    "registered": {
+      "type": "integer"
+    },
+    "remainVotes": {
+      "type": "integer"
+    },
+    "totalPopulation": {
+      "type": "integer"
+    },
+    "unitId": {
+      "type": "string"
+    },
+    "validVotes": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "areaSize",
+    "areaTypeCode",
+    "areaTypeName",
+    "country",
+    "electorate",
+    "femalePopulation",
+    "gss",
+    "identity",
+    "latitudeMaximum",
+    "latitudeMiddle",
+    "latitudeMinimum",
+    "leaveVotes",
+    "longitudeMaximum",
+    "longitudeMiddle",
+    "longitudeMinimum",
+    "malePopulation",
+    "mapItId",
+    "name",
+    "ons",
+    "regionCode",
+    "regionName",
+    "registered",
+    "remainVotes",
+    "totalPopulation",
+    "unitId",
+    "validVotes"
+  ]
+}

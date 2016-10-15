@@ -9,6 +9,9 @@ documentation:
     content:  |
       Some thing about the API
 
+schemas: 
+  - area: !include brexit-include-area.schema
+  
 /areas:
   displayName: Areas
   description: The collection of Areas where Brexit occurred
@@ -67,16 +70,9 @@ documentation:
         200:
           body:
             application/json:
+              schema: area
               example: |
                  {
-                    "_id": {
-                      "time": 1471828347000,
-                      "machine": -1950106814,
-                      "timeSecond": 1471828347,
-                      "inc": 67449346,
-                      "new": false
-                    },
-                    "_class": "io.dd.brexit.model.Area",
                     "areaSize": 21574981.58999999,
                     "areaTypeCode": "LBO",
                     "areaTypeName": "London borough",
@@ -89,7 +85,6 @@ documentation:
                     "latitudeMiddle": "51.515687169175585",
                     "latitudeMinimum": "51.484448635185025",
                     "leaveVotes": 35224,
-                    "links": [],
                     "longitudeMaximum": "0.009886230454418358",
                     "longitudeMiddle": "-0.03463999651847128",
                     "longitudeMinimum": "-0.08016930267471568",
