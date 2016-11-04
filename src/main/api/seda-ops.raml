@@ -1,0 +1,379 @@
+#%RAML 0.8
+title: mix360_sync_api
+version: 1.0.0
+baseUri: http://localhost:8162/mix360/sync/seda
+
+/status:
+  displayName: SEDA Ops Controller Status Functions
+  get:
+    description: Get all the status 
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {"errorExist":true,"uptime":"23 days 4 hours 31 minutes","flows":[{"name":"file_mix360SyncXyz","activeStatus":[{"sedaName":"normal","status":"started"},{"sedaName":"recovery","status":"stopped"}],"lastStatusChange":"2015/10/29 13:21:49.123","lastStatusReset":"2015/10/29 09:43:01.789","messagesPerSecond":1.98765,"fileCounts":[{"name":"working","current":320,"total":3457890},{"name":"in","current":320,"total":3457890},{"name":"out","current":320,"total":3457890},{"name":"error","current":320,"total":3457890},{"name":"done","current":320,"total":3457890}]},{"name":"file_mix360SyncAbc","activeStatus":[{"sedaName":"normal","status":"started"}],"lastStatusChange":"2015/10/29 13:21:49.123","lastStatusReset":"2015/10/29 09:43:01.789","messagesPerSecond":0,"fileCounts":[{"name":"working","current":320,"total":3457890},{"name":"error","current":3,"total":3}]}{"name":"file_mix360SyncAbc","activeStatus":[{"sedaName":"normal","status":"started"}],"lastStatusChange":"2015/10/29 14:00:00.000","fileCounts":[{"name":"error","current":3,"total":3}]}]}
+
+      500:
+        #% Internal server error     
+        body:
+           application/json:
+             example: |
+                {"errorMessage":"Unknown error for GET status - command rejected: {errorMessage}"}  
+              
+  delete:
+    description: Reset the status on all flows
+    responses:
+      200:
+        #% All status reset     
+
+      500:
+        #% Internal server error     
+        body:
+           application/json:
+             example: |
+                {"errorMessage":"Unknown error for GET status - command rejected: {errorMessage}"}  
+              
+  /{flowName}:
+    displayName: Retrieve an Ops Controller status
+    get:
+      description: Get the status for a particular flowName 
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {"name":"file_mix360SyncXyz","activeStatus":[{"sedaName":"normal","status":"started"},{"sedaName":"recovery","status":"stopped"}],"lastStatusChange":"2015/10/29 13:21:49.123","lastStatusReset":"2015/10/29 09:43:01.789","messagesPerSecond":1.98765,"fileCounts":[{"name":"working","current":320,"total":3457890},{"name":"in","current":320,"total":3457890},{"name":"out","current":320,"total":3457890},{"name":"error","current":320,"total":3457890},{"name":"done","current":320,"total":3457890}]}
+
+        404:
+          #% Not found
+          body:
+            application/json:
+              example: |
+                {"errorMessage":"GET flow file_mix360SyncXyz status - flow not found"}
+
+        500:
+          #% Internal server error     
+          body:
+             application/json:
+               example: |
+                {"errorMessage":"Unknown error for GET flow file_mix360SyncXyz status - command rejected: {errorMessage}"}  
+                
+    delete:
+      description: Reset the status on a particular flow
+      responses:
+        200:
+          #% All status for this flow deleted
+
+        404:
+          #% Not found
+          body:
+            application/json:
+              example: |
+                {"errorMessage":"DELETE flow file_mix360SyncXyz status - flow not found"}
+
+        500:
+          #% Internal server error                   
+          body:
+             application/json:
+               example: |
+                {"errorMessage":"Unknown error for DELETE flow file_mix360SyncXyz status - command rejected: {errorMessage}"}  
+
+
+ 
+/flows:
+  
+  displayName: All flow features
+  get:
+    description: Get all SEDA flows
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {"file_mix360SyncXyz","file_mix360SyncAbc","file_mix360SyncCde"}
+              
+      500:
+        #% Internal server error                   
+        body:
+           application/json:
+             example: |
+                {"errorMessage":"Unknown error for GET all flows - command rejected: {errorMessage}"}  
+               
+  /start:
+    displayName: Start all flows
+    post:
+      description: Starts all the flows
+      responses:
+        200:
+          #% All flows started
+          
+        500:
+          #% Internal server error                   
+          body:
+             application/json:
+               example: |
+                {"errorMessage":"Unknown error for POST start all flows - command rejected: {errorMessage}"}  
+              
+    /{flowName}:
+      displayName: Start a flow
+      post:
+        description: Starts the particular flow addressed by flowName
+        responses:
+          200:
+            #% flows started
+
+          404:
+            #% Not found
+            body:
+              application/json:
+                example: |
+                  {"errorMessage":"POST start flow file_mix360SyncXyz - flow not found"}
+  
+          500:
+            #% Internal server error                   
+            body:
+               application/json:
+                 example: |
+                    {"errorMessage":"Unknown error for POST start flow file_mix360SyncAbc - command rejected: {errorMessage}"}  
+    
+  /stop:
+    displayName: Stops all flows
+    post:
+      description: Stops all the flows
+      responses:
+        200:
+          #% All flows stopped
+          
+        500:
+          #% Internal server error                   
+          body:
+             application/json:
+               example: |
+                  {"errorMessage":"Unknown error for POST stop all flows - command rejected: {errorMessage}"}  
+              
+    /{flowName}:
+      displayName: Stop a flow
+      post:
+        description: Stops the articular flow addressed by flowName
+        responses:
+          200:
+            #% flows stopped
+
+          404:
+            #% Not found
+            body:
+              application/json:
+                example: |
+                  {"errorMessage":"POST stop flow file_mix360SyncXyz - flow not found"}
+  
+          500:
+            #% Internal server error                   
+            body:
+               application/json:
+                 example: |
+                    {"errorMessage":"Unknown error for POST stop flow file_mix360SyncAbc - command rejected: {errorMessage}"}  
+
+  /activate/{flowName}:
+    displayName: Activate a flow
+    post:
+      description: Activates a particular flow so that the functionality is executed i.e. it is not bypassed
+      responses:
+        200:
+          #% flow activated
+
+        404:
+          #% Not found
+          body:
+            application/json:
+              example: |
+                {"errorMessage":"POST activate flow file_mix360SyncXyz - flow not found"}
+  
+        500:
+          #% Internal server error                   
+          body:
+             application/json:
+               example: |
+                  {"errorMessage":"Unknown error for POST activate flow file_mix360SyncAbc - command rejected: {errorMessage}"}  
+    
+  /deactivate/{flowName}:
+    displayName: Deactivate a flow
+    post:
+      description: Deactivates a particular flow so that the functionality is bypassed
+      responses:
+        200:
+          #% flow deactivated
+
+        404:
+          #% Not found
+          body:
+            application/json:
+              example: |
+                {"errorMessage":"POST deactivate flow file_mix360SyncXyz - flow not found"}
+  
+        500:
+          #% Internal server error                   
+          body:
+             application/json:
+               example: |
+                  {"errorMessage":"Unknown error for POST deactivate flow file_mix360SyncAbc - command rejected: {errorMessage}"}  
+ 
+/files:
+
+  displayName: All file utilities
+  get:
+    description: Get all the file names in every flow folder compilation 
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [{"name":"file_mix360SyncXyz","folders":[{"name":"working","count":200},{"name":"in","count":200}]},{"name":"file_mix360SyncAbc","folders":[{"name":"in","count":200}]}]
+              
+      500:
+        #% Internal server error     
+        body:
+           application/json:
+             example: |
+                {"errorMessage":"Unknown error for GET all file counts - command rejected: {errorMessage}"}  
+              
+
+  /{flowName}:
+    get:
+      description: Get all the file names in the indicated flow's folder compilation 
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {"name":"file_mix360SyncXyz","folders":[{"name":"eorking","count":200},{"name":"in","count":200}]}
+                
+        404:
+          #% Not found
+          body:
+            application/json:
+              example: |
+                {"errorMessage":"GET file count for flow file_mix360SyncXyz - flow not found"}
+  
+        500:
+          #% Internal server error     
+          body:
+             application/json:
+               example: |
+                  {"errorMessage":"Unknown error for GET flow file_mix360SyncXyz file counts - command rejected: {errorMessage}"}  
+              
+
+    /{folder}:
+      get:
+        description: Get all the file names in the indicated flow's folder combination 
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {"Name":"In","Count":200}
+                  
+          404:
+            #% Not found
+            body:
+              application/json:
+                example: |
+                  {"errorMessage":"GET file count for flow file_mix360SyncXyz and folder: working - flow or folder not found"}
+    
+          500:
+            #% Internal server error     
+            body:
+               application/json:
+                 example: |
+                    {"errorMessage":"Unknown error for GET flow file_mix360SyncXyz and folder: working file counts - command rejected: {errorMessage}"}  
+  
+  
+  /move:
+    displayName:  Moves files from one place to another
+    post:
+      description:  Moves files from one place to another
+      body:
+        application/json:
+          example: |
+            {"source":{"flowName":"file_mix360SyncXyz","folder":"out","fileName":"Xyz","fileMask":"mask____123"},"destination":{"flowName":"file_mix360SyncAbc","folder":"in"}}
+            
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {"MoveCount":5000}
+                
+        404:
+          #% Not found
+          body:
+            application/json:
+              example: |
+                {"errorMessage":+{flowName}+“not found for“+{command}}  
+  
+  
+        500:
+          #% Internal server error     
+          body:
+             application/json:
+               example: |
+                   {"errorMessage":"Unknown error for “ + {command} + “ - command rejected: "+{errorMessage}}  
+                
+
+  /delete:
+    displayName: Deletes files
+    post:
+      description:  Deletes files
+      body:
+        application/json:
+          example: |
+            {"flowName":"file_mix360SyncXyz","folder":"out","fileName":"Xyz","fileMask":"mask____123"}
+            
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {"DeleteCount":5000}
+                
+        404:
+          #% Not found
+          body:
+            application/json:
+              example: |
+                {"errorMessage":+{flowName}+“not found for“+{command}}  
+  
+        500:
+          #% Internal server error     
+          body:
+             application/json:
+               example: |
+                   {"errorMessage":"Unknown error for “ + {command} + “ - command rejected: "+{errorMessage}}  
+
+  /create:
+    displayName: Creates files
+    post:
+      description:  Deletes files
+      body:
+        application/json:
+          example: |
+            {"flowName":"file_mix360SyncXyz","folder":"out","fileName":"Xyz","body":"{ This is the body of the file }"}}
+            
+      responses:
+        200:
+          #% File created
+  
+        404:
+          #% Not found
+          body:
+            application/json:
+              example: |
+                {"errorMessage":+{flowName}+“notfoundfor“+{command}}  
+  
+        500:
+          #% Internal server error     
+          body:
+             application/json:
+               example: |
+                  {"errorMessage":"Unknown error for “ + {command} + “ - command rejected: "+{errorMessage}}  
+

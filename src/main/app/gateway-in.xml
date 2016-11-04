@@ -12,7 +12,7 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
     <flow name="get:/areas:brexit-system-config">
 		<flow-ref name="areas-find-all" doc:name="findAll"/>      
 		<logger level="INFO" doc:name="GET /areas" message="GET /areas  Returned : #[payload]" />     
-        <set-payload value="#[payload]" doc:name="Set Payload" mimeType="application/json"/>
+        <set-payload value="#[payload]" doc:name="Set Payload" mimeType="application/json"  />
     </flow>
     
     <flow name="get:/areas/{identity}:brexit-system-config">

@@ -17,7 +17,9 @@ http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mo
     <flow name="brexit-system-main">
         <http:listener config-ref="brexit-system-httpListenerConfig" path="/api/*" doc:name="API MAIN" >
          <http:response-builder>
-            <http:header headerName="Access-Control-Allow-Origin" value="*"/>
+                <http:header headerName="Access-Control-Allow-Origin" value="*"/>
+                <http:header headerName="Content-Type" value="application/json"/>
+
         </http:response-builder>
         </http:listener>
         <apikit:router config-ref="brexit-system-config" doc:name="APIkit Router" />

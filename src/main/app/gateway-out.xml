@@ -14,45 +14,45 @@ http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mul
     <mongo:config name="Mongo_DB"  host="${mongo.hostname}" username="ralph" database="${mongo.database.name}" doc:name="Mongo DB" />
 	<flow name="areas-find-all">
                <mongo:find-objects-using-query-map config-ref="Mongo_DB" doc:name="Areas" collection="Area" >
-        	<mongo:fields>
-				<mongo:field>areaSize</mongo:field>
-				<mongo:field>areaTypeCode</mongo:field>
-				<mongo:field>areaTypeName</mongo:field>
-				<mongo:field>country</mongo:field>
-				<mongo:field>electorate</mongo:field>
-				<mongo:field>femalePopulation</mongo:field>
-				<mongo:field>gss</mongo:field>
-				<mongo:field>identity</mongo:field>
-				<mongo:field>latitudeMaximum</mongo:field>
-				<mongo:field>latitudeMiddle</mongo:field>
-				<mongo:field>latitudeMinimum</mongo:field>
-				<mongo:field>leaveVotes</mongo:field>
-				<mongo:field>longitudeMaximum</mongo:field>
-				<mongo:field>longitudeMiddle</mongo:field>
-				<mongo:field>longitudeMinimum</mongo:field>
-				<mongo:field>malePopulation</mongo:field>
-				<mongo:field>mapItId</mongo:field>
-				<mongo:field>name</mongo:field>
-				<mongo:field>ons</mongo:field>
-				<mongo:field>regionCode</mongo:field>
-				<mongo:field>regionName</mongo:field>
-				<mongo:field>registered</mongo:field>
-				<mongo:field>remainVotes</mongo:field>
-				<mongo:field>totalPopulation</mongo:field>
-				<mongo:field>unitId</mongo:field>
-				<mongo:field>validVotes</mongo:field>
-        </mongo:fields>
+	        	<mongo:fields>
+					<mongo:field>areaSize</mongo:field>
+					<mongo:field>areaTypeCode</mongo:field>
+					<mongo:field>areaTypeName</mongo:field>
+					<mongo:field>country</mongo:field>
+					<mongo:field>electorate</mongo:field>
+					<mongo:field>femalePopulation</mongo:field>
+					<mongo:field>gss</mongo:field>
+					<mongo:field>identity</mongo:field>
+					<mongo:field>latitudeMaximum</mongo:field>
+					<mongo:field>latitudeMiddle</mongo:field>
+					<mongo:field>latitudeMinimum</mongo:field>
+					<mongo:field>leaveVotes</mongo:field>
+					<mongo:field>longitudeMaximum</mongo:field>
+					<mongo:field>longitudeMiddle</mongo:field>
+					<mongo:field>longitudeMinimum</mongo:field>
+					<mongo:field>malePopulation</mongo:field>
+					<mongo:field>mapItId</mongo:field>
+					<mongo:field>name</mongo:field>
+					<mongo:field>ons</mongo:field>
+					<mongo:field>regionCode</mongo:field>
+					<mongo:field>regionName</mongo:field>
+					<mongo:field>registered</mongo:field>
+					<mongo:field>remainVotes</mongo:field>
+					<mongo:field>totalPopulation</mongo:field>
+					<mongo:field>unitId</mongo:field>
+					<mongo:field>validVotes</mongo:field>
+	        </mongo:fields>
         </mongo:find-objects-using-query-map>
-        <mongo:mongo-collection-to-json doc:name="CollectionToJson" />
-	   	 <json:json-to-object-transformer returnClass="java.util.List" doc:name="JSON to List"/>
+        <mongo:mongo-collection-to-json  doc:name="CollectionToJson" />
 
+	   	 <json:json-to-object-transformer returnClass="java.util.List" doc:name="JSON to List"/>
 		<foreach doc:name="Each Area">
 			<expression-component doc:name="Remove _ID">payload.remove('_id')</expression-component>
 		</foreach>
+		<json:object-to-json-transformer  sourceClass="java.util.List"  doc:name="List to JSON" />
 
-		<json:object-to-json-transformer  sourceClass="java.util.List"  doc:name="List to JSON" mimeType="application/json"/>
         <logger level="INFO" doc:name="/areas" message="Mongo GET /areas Returned : #[payload]" />
-		<set-payload  doc:name="Payload" value="#[payload]" />
+		<set-payload  doc:name="Payload" value="#[payload]"   mimeType="application/json"  encoding="" />
     </flow>
     
 	<flow name="areas-find-one-by-identity">
@@ -89,12 +89,12 @@ http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mul
 				<mongo:field>validVotes</mongo:field>
         </mongo:fields>
 </mongo:find-one-object-using-query-map>
-	        <mongo:dbobject-to-json doc:name="DBObjectToJSON" />
+		<mongo:dbobject-to-json doc:name="DBObjectToJSON" />
 	   	 <json:json-to-object-transformer returnClass="java.util.Map" doc:name="JSON to Map"/>
 		<expression-component doc:name="Remove _ID">payload.remove('_id')</expression-component>
        	<json:object-to-json-transformer sourceClass="java.util.Map"  doc:name="Map to JSON" />
         <logger level="INFO" doc:name="/areas/{identity}" message="Mongo GET /area/#[identity]  Returned : #[payload]" />
-<!--         <set-payload value="#[payload]" doc:name="Set Payload" /> -->
+		<set-payload  doc:name="Payload" value="#[payload]" mimeType="application/json"/>
 	
 		<choice-exception-strategy doc:name="Choice Exception Strategy">
 			<catch-exception-strategy doc:name="Catch Exception Strategy" when="#[exception.causedBy(com.mongodb.MongoException)]">
